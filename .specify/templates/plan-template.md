@@ -1,10 +1,26 @@
-# Development Plan
+# Development Plan Template
 
 ## Goal
 
-## Timeline
+## Milestones
 
-## Tasks
+### Milestone 1
+
+Tasks:
+
+Expected Completion:
+
+### Milestone 2
+
+Tasks:
+
+Expected Completion:
+
+### Milestone 3
+
+Tasks:
+
+Expected Completion:
 
 ## Risks
 

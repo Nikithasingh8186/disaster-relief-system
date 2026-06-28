@@ -1,11 +1,25 @@
-# Task
+# Task Template
+
+## Task Name
 
 ## Description
 
 ## Assignee
 
-## Estimate
+## Priority
 
-## Due Date
+- High
+- Medium
+- Low
+
+## Estimated Time
 
 ## Dependencies
+
+## Status
+
+- Todo
+- In Progress
+- Completed
+
+## Notes
