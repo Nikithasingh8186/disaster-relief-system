@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-multipart
+pillow
+pytesseract
+pandas
+numpy
+pytest
+black
+flake8
+isort
+mypy
+bandit
