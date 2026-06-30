@@ -7,9 +7,15 @@ pillow
 pytesseract
 pandas
 numpy
+
 pytest
+pytest-cov
+httpx
+
 black
 flake8
 isort
 mypy
+
 bandit
+pip-audit
