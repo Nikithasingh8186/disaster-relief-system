@@ -1,45 +1,54 @@
 stages:
   - lint
-  - format
-  - type_check
+  - security
   - test
-  - coverage
+  - quality
 
 image: python:3.10
 
 before_script:
   - pip install -r requirements.txt
-  - pip install pytest pytest-cov black isort mypy flake8
+  - pip install pytest pytest-cov bandit pylint pip-audit pyupgrade
 
 # ---------------- LINT ----------------
 lint:
   stage: lint
   script:
     - flake8 backend
-
-# ---------------- FORMAT ----------------
-format:
-  stage: format
-  script:
     - black --check .
     - isort --check-only .
 
-# ---------------- TYPE CHECK ----------------
-type_check:
-  stage: type_check
+# ---------------- SECURITY ----------------
+security_bandit:
+  stage: security
   script:
-    - mypy backend || true
+    - bandit -r backend
+
+dependency_audit:
+  stage: security
+  script:
+    - pip-audit
+
+semgrep:
+  stage: security
+  image: returntocorp/semgrep
+  script:
+    - semgrep --config=auto
 
 # ---------------- TEST ----------------
 test:
   stage: test
   script:
     - export PYTHONPATH=$CI_PROJECT_DIR
-    - pytest -q
-
-# ---------------- COVERAGE ----------------
-coverage:
-  stage: coverage
-  script:
-    - pip install pytest-cov
     - pytest --cov=backend --cov-report=term
+
+# ---------------- QUALITY ----------------
+pylint:
+  stage: quality
+  script:
+    - pylint backend || true
+
+pyupgrade:
+  stage: quality
+  script:
+    - pyupgrade $(git ls-files '*.py')
