@@ -1,0 +1,8 @@
+{
+  "name": "RescueSync AI",
+  "short_name": "RescueSync",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb"
+}

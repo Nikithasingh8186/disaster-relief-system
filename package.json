@@ -1,0 +1,7 @@
+{
+  "name": "rescuesync-ai",
+  "private": true,
+  "scripts": {
+    "frontend": "cd frontend && npm run dev"
+  }
+}

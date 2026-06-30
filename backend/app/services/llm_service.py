@@ -1,30 +1,44 @@
-from app.services.priority_service import get_priority
+import re
+
+from backend.app.services.priority_service import get_priority
 
 
 def extract_incident(text: str):
+    original_text = text
     text = text.lower()
 
+    # Default values
     people = 1
     injuries = 0
+    location = "Unknown"
 
-    if "five" in text:
+    # Extract number of people
+    match = re.search(r"(\d+)\s+people", text)
+    if match:
+        people = int(match.group(1))
+    elif "five" in text:
         people = 5
-
-    if "ten" in text:
+    elif "ten" in text:
         people = 10
 
-    if "injured" in text:
+    # Detect injuries
+    if "injured" in text or "injuries" in text:
         injuries = 1
 
-    priority = get_priority(
-        people,
-        injuries
-    )
+    # Simple location detection
+    if "vijayawada" in text:
+        location = "Vijayawada"
+    elif "chennai" in text:
+        location = "Chennai"
+    elif "hyderabad" in text:
+        location = "Hyderabad"
+
+    priority = get_priority(people, injuries)
 
     return {
-        "location": "Unknown",
+        "location": location,
         "people_affected": people,
         "injuries": injuries,
-        "needs": text,
-        "priority": priority
+        "needs": original_text,
+        "priority": priority,
     }

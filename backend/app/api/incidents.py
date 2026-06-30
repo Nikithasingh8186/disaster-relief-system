@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.database.db import get_db
+from backend.app.database.db import get_db
 
 router = APIRouter()
 
@@ -9,9 +9,8 @@ def get_incidents():
     conn = get_db()
     cur = conn.cursor()
 
-    rows = cur.execute(
-        "SELECT * FROM incidents"
-    ).fetchall()
+    cur.execute("SELECT * FROM incidents")
+    rows = cur.fetchall()
 
     conn.close()
 

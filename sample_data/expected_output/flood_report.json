@@ -1,0 +1,11 @@
+{
+  "location": "Krishna River",
+  "people_affected": 10,
+  "injuries": 0,
+  "needs": [
+    "food",
+    "water",
+    "blankets"
+  ],
+  "priority": "High"
+}

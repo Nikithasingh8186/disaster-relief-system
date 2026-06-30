@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from app.services.llm_service import extract_incident
-from app.database.db import get_db
+from backend.app.services.llm_service import extract_incident
+from backend.app.database.db import get_db
 
 router = APIRouter()
 
