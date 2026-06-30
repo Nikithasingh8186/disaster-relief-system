@@ -2,9 +2,9 @@
 
 ## Requirements
 
-* Python 3.12
-* Node.js 20
-* SQLite
+- Python 3.12
+- Node.js 20
+- SQLite
 
 ## Backend Setup
 

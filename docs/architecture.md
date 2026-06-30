@@ -28,30 +28,30 @@ Dashboard
 
 ### Frontend
 
-* React
-* Vite
-* PWA
+- React
+- Vite
+- PWA
 
 ### Backend
 
-* FastAPI
-* SQLite
+- FastAPI
+- SQLite
 
 ### AI Components
 
-* Whisper.cpp
-* Tesseract OCR
-* Phi-3 Mini GGUF
-* llama.cpp
+- Whisper.cpp
+- Tesseract OCR
+- Phi-3 Mini GGUF
+- llama.cpp
 
 ### Storage
 
-* SQLite
-* Local Filesystem
+- SQLite
+- Local Filesystem
 
 ## Design Principles
 
-* Offline First
-* CPU First
-* Privacy by Design
-* Low Resource Consumption
+- Offline First
+- CPU First
+- Privacy by Design
+- Low Resource Consumption

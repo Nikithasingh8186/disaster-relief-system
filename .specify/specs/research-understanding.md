@@ -16,9 +16,11 @@ These reports are difficult to organize and prioritize.
 ## Existing Solutions
 
 ### Government Helplines
+
 Require internet and manual processing.
 
 ### Cloud AI Systems
+
 Require internet and powerful servers.
 
 ---

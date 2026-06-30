@@ -12,8 +12,8 @@ multipart/form-data
 
 ```json
 {
-  "success": true,
-  "incident_id": 1
+    "success": true,
+    "incident_id": 1
 }
 ```
 
@@ -49,9 +49,9 @@ Search incidents.
 
 Parameters:
 
-* location
-* priority
-* disaster_type
+- location
+- priority
+- disaster_type
 
 ---
 

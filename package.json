@@ -3,5 +3,9 @@
   "private": true,
   "scripts": {
     "frontend": "cd frontend && npm run dev"
+  },
+  "devDependencies": {
+    "eslint": "^10.6.0",
+    "prettier": "^3.9.4"
   }
 }
