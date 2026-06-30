@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "eslint": "^10.6.0",
+    "knip": "^6.23.0",
     "prettier": "^3.9.4"
   }
 }

@@ -1,82 +1,146 @@
-# RescueSync AI
+# 🚨 Disaster Relief Information Extractor
 
-## Offline Disaster Relief Information Extractor
+An AI-powered Disaster Relief Information System that helps users report, store, and view disaster incidents with **offline support, GPS location, and image/text reporting**.
 
-RescueSync AI is an offline-first, CPU-powered AI system that converts unstructured disaster reports (audio, images, and text) into structured incident data.
+---
 
-## Features
+## 🌐 Live Features
 
-- Offline-first architecture
-- CPU-only inference
-- Audio transcription using Whisper.cpp
-- OCR using Tesseract
-- Structured extraction using Phi-3 Mini
-- SQLite database
-- Incident dashboard
-- Search and filtering
-- CSV export
+✔ Submit disaster reports (text + image)  
+✔ Automatic GPS location detection  
+✔ Manual location input (offline mode)  
+✔ Offline-first support using localStorage  
+✔ Backend storage using FastAPI  
+✔ Image upload support (Base64 encoding)  
+✔ Real-time incident dashboard  
 
-## Tech Stack
+---
+
+## 🧠 Tech Stack
 
 ### Frontend
-
-- React
-- Vite
-- Tailwind CSS
-- PWA
+- React (Vite)
+- JavaScript
+- HTML/CSS
+- localStorage (offline mode)
 
 ### Backend
-
 - FastAPI
-- SQLite
+- Python
+- SQLite / MongoDB (based on setup)
+- REST APIs
 
-### AI
+### Tools
+- Git
+- Bandit (security)
+- Flake8 / MyPy (linting)
+- Pre-commit hooks
 
-- Whisper.cpp
-- Tesseract OCR
-- Phi-3 Mini GGUF
-- llama.cpp
+---
 
-## Architecture
+## 📂 Project Structure
+backend/
+├── app/
+│ ├── main.py
+│ ├── database/
+│ ├── models/
+│ ├── schemas/
+│ └── services/
 
-Audio/Image/Text
-↓
-Speech/OCR Processing
-↓
-Text Normalization
-↓
-Local LLM
-↓
-Structured JSON
-↓
-SQLite
-↓
-Dashboard
+frontend/
+├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── services/
+│ └── App.jsx
 
-## Running
+---
 
-### Backend
+## 🚀 Features
 
-```bash
-pip install -r requirements.txt
-uvicorn backend.app.main:app --reload
+### 📍 Location System
+- Auto GPS detection (online)
+- Manual location input (offline fallback)
+
+### 📝 Reporting System
+- Text incident reporting
+- Image upload support
+- Timestamped entries
+
+### 📡 Offline Support
+- Works without internet
+- Saves data in localStorage
+- Sync-ready architecture
+
+### 🧠 Backend System
+- FastAPI REST APIs
+- Incident parsing & normalization
+- Structured data storage
+
+---
+
+## 📦 API Endpoints
+
+### ➤ Create Incident
 ```
 
-### Frontend
+POST /incidents
+➤ Get All Incidents
 
-```bash
+GET /incidents
+⚙️ Setup Instructions
+1️⃣ Clone Repo
+git clone <your-repo-url>
+cd disaster-relief-information-extractor
+2️⃣ Backend Setup
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+
+Backend runs on:
+
+http://127.0.0.1:8000
+3️⃣ Frontend Setup
+cd frontend
 npm install
 npm run dev
-```
 
-## Offline Demo
+Frontend runs on:
 
-1. Disconnect internet.
-2. Start backend.
-3. Start frontend.
-4. Upload sample files.
-5. Verify structured output.
+http://localhost:5173
+📱 Offline Mode
 
-## License
+If internet is OFF:
 
-GPL-3.0
+Data is saved in browser localStorage
+Manual location can be entered
+Data syncs when backend is available
+📱 Offline Mode
+
+If internet is OFF:
+
+Data is saved in browser localStorage
+Manual location can be entered
+Data syncs when backend is available
+🔒 Security
+Input validation on backend
+Safe JSON parsing
+No exposed secrets
+Bandit security scanning supported
+🧪 Future Improvements
+AI-based incident classification
+Real-time disaster alerts
+Map visualization (Leaflet/Google Maps)
+Cloud database integration
+User authentication system
+👨‍💻 Author
+
+Nikitha Singh
+spurthi
+Disaster Relief AI System Project
+
+⭐ Project Goal
+
+To build a hybrid offline + online disaster reporting system that works even in low connectivity areas and helps in emergency response coordination.
+
+
