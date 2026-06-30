@@ -1,8 +1,7 @@
+from app.database.db import get_db
+from app.services.parser_service import parse_incident
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from app.services.parser_service import parse_incident
-from app.database.db import get_db
 
 app = FastAPI()
 
@@ -15,12 +14,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # 🔥 CREATE TABLE (AUTO SETUP)
 def init_db():
     conn = get_db()
     cursor = conn.cursor()
 
-    cursor.execute("""
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS incidents (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             text TEXT,
@@ -28,10 +29,12 @@ def init_db():
             location TEXT,
             time TEXT
         )
-    """)
+    """
+    )
 
     conn.commit()
     conn.close()
+
 
 init_db()
 
@@ -44,15 +47,18 @@ def add_incident(data: dict):
     conn = get_db()
     cursor = conn.cursor()
 
-    cursor.execute("""
+    cursor.execute(
+        """
         INSERT INTO incidents (text, image, location, time)
         VALUES (?, ?, ?, ?)
-    """, (
-        cleaned.get("text"),
-        str(cleaned.get("image")),
-        str(cleaned.get("location")),
-        cleaned.get("time")
-    ))
+    """,
+        (
+            cleaned.get("text"),
+            str(cleaned.get("image")),
+            str(cleaned.get("location")),
+            cleaned.get("time"),
+        ),
+    )
 
     conn.commit()
     conn.close()
@@ -73,11 +79,17 @@ def get_incidents():
 
     incidents = []
     for row in rows:
-        incidents.append({
-            "text": row["text"],
-            "image": row["image"],
-            "location": eval(row["location"]) if row["location"].startswith("{") else row["location"],
-            "time": row["time"]
-        })
+        incidents.append(
+            {
+                "text": row["text"],
+                "image": row["image"],
+                "location": (
+                    eval(row["location"])
+                    if row["location"].startswith("{")
+                    else row["location"]
+                ),
+                "time": row["time"],
+            }
+        )
 
     return [parse_incident(i) for i in incidents]
