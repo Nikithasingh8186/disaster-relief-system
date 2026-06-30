@@ -11,8 +11,8 @@ multipart/form-data
 Response:
 
 {
-  "success": true,
-  "incident_id": 1
+"success": true,
+"incident_id": 1
 }
 
 ---

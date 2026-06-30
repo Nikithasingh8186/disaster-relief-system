@@ -33,12 +33,12 @@ feat: add audio upload endpoint
 
 ### Python
 
-* Black
-* Flake8
-* MyPy
-* isort
+- Black
+- Flake8
+- MyPy
+- isort
 
 ### JavaScript
 
-* ESLint
-* Prettier
+- ESLint
+- Prettier

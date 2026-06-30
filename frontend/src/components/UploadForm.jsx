@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 function UploadForm({ refresh }) {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [image, setImage] = useState(null);
 
   const [gpsLocation, setGpsLocation] = useState(null);
-  const [manualLocation, setManualLocation] = useState("");
+  const [manualLocation, setManualLocation] = useState('');
 
-  const [locError, setLocError] = useState("");
+  const [locError, setLocError] = useState('');
   const [loadingLoc, setLoadingLoc] = useState(true);
 
-  const API = "http://127.0.0.1:8000/incidents";
+  const API = 'http://127.0.0.1:8000/incidents';
 
   // 🔥 GPS LOCATION
   const getGPSLocation = () => {
     if (!navigator.onLine) {
-      setLocError("Offline mode: enter location manually");
+      setLocError('Offline mode: enter location manually');
       setLoadingLoc(false);
       return;
     }
 
     if (!navigator.geolocation) {
-      setLocError("Geolocation not supported");
+      setLocError('Geolocation not supported');
       setLoadingLoc(false);
       return;
     }
@@ -34,26 +34,26 @@ function UploadForm({ refresh }) {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         });
-        setLocError("");
+        setLocError('');
         setLoadingLoc(false);
       },
       () => {
         setGpsLocation(null);
         setLoadingLoc(false);
-        setLocError("GPS failed. Enter location manually.");
+        setLocError('GPS failed. Enter location manually.');
       },
       {
         enableHighAccuracy: true,
         timeout: 10000,
         maximumAge: 0,
-      }
+      },
     );
   };
 
   useEffect(() => {
     getGPSLocation();
-    window.addEventListener("online", getGPSLocation);
-    return () => window.removeEventListener("online", getGPSLocation);
+    window.addEventListener('online', getGPSLocation);
+    return () => window.removeEventListener('online', getGPSLocation);
   }, []);
 
   // 🔥 IMAGE TO BASE64
@@ -68,13 +68,13 @@ function UploadForm({ refresh }) {
   const saveIncident = async (incident) => {
     try {
       await fetch(API, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(incident),
       });
     } catch (err) {
-      const old = JSON.parse(localStorage.getItem("incidents")) || [];
-      localStorage.setItem("incidents", JSON.stringify([...old, incident]));
+      const old = JSON.parse(localStorage.getItem('incidents')) || [];
+      localStorage.setItem('incidents', JSON.stringify([...old, incident]));
     }
   };
 
@@ -82,14 +82,14 @@ function UploadForm({ refresh }) {
   const getFinalLocation = () => {
     if (gpsLocation) {
       return {
-        type: "gps",
+        type: 'gps',
         value: gpsLocation,
       };
     }
 
     if (manualLocation.trim()) {
       return {
-        type: "manual",
+        type: 'manual',
         value: manualLocation,
       };
     }
@@ -104,12 +104,12 @@ function UploadForm({ refresh }) {
     const location = getFinalLocation();
 
     if (!location) {
-      alert("Please provide location");
+      alert('Please provide location');
       return;
     }
 
     const incident = {
-      type: "text",
+      type: 'text',
       text,
       image: null,
       location,
@@ -118,7 +118,7 @@ function UploadForm({ refresh }) {
 
     await saveIncident(incident);
 
-    setText("");
+    setText('');
     refresh();
   };
 
@@ -129,15 +129,15 @@ function UploadForm({ refresh }) {
     const location = getFinalLocation();
 
     if (!location) {
-      alert("Please provide location");
+      alert('Please provide location');
       return;
     }
 
     const base64 = await convertToBase64(image);
 
     const incident = {
-      type: "image",
-      text: "",
+      type: 'image',
+      text: '',
       image: base64,
       location,
       time: new Date().toISOString(), // FIXED TIME
@@ -157,9 +157,11 @@ function UploadForm({ refresh }) {
       {loadingLoc ? (
         <p>📡 Fetching GPS location...</p>
       ) : gpsLocation ? (
-        <p>📍 GPS: {gpsLocation.lat}, {gpsLocation.lng}</p>
+        <p>
+          📍 GPS: {gpsLocation.lat}, {gpsLocation.lng}
+        </p>
       ) : (
-        <p style={{ color: "red" }}>{locError}</p>
+        <p style={{ color: 'red' }}>{locError}</p>
       )}
 
       {/* MANUAL LOCATION */}
@@ -183,7 +185,8 @@ function UploadForm({ refresh }) {
         onChange={(e) => setText(e.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
       <button onClick={submitText}>Submit Text</button>
 
       <hr />
@@ -195,7 +198,8 @@ function UploadForm({ refresh }) {
         onChange={(e) => setImage(e.target.files[0] || null)}
       />
 
-      <br /><br />
+      <br />
+      <br />
       <button onClick={submitImage}>Upload Image</button>
     </div>
   );

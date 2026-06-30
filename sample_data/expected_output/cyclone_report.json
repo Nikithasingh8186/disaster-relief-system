@@ -2,9 +2,6 @@
   "location": "Unknown",
   "people_affected": 20,
   "injuries": 0,
-  "needs": [
-    "shelter",
-    "food"
-  ],
+  "needs": ["shelter", "food"],
   "priority": "High"
 }

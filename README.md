@@ -6,36 +6,36 @@ RescueSync AI is an offline-first, CPU-powered AI system that converts unstructu
 
 ## Features
 
-* Offline-first architecture
-* CPU-only inference
-* Audio transcription using Whisper.cpp
-* OCR using Tesseract
-* Structured extraction using Phi-3 Mini
-* SQLite database
-* Incident dashboard
-* Search and filtering
-* CSV export
+- Offline-first architecture
+- CPU-only inference
+- Audio transcription using Whisper.cpp
+- OCR using Tesseract
+- Structured extraction using Phi-3 Mini
+- SQLite database
+- Incident dashboard
+- Search and filtering
+- CSV export
 
 ## Tech Stack
 
 ### Frontend
 
-* React
-* Vite
-* Tailwind CSS
-* PWA
+- React
+- Vite
+- Tailwind CSS
+- PWA
 
 ### Backend
 
-* FastAPI
-* SQLite
+- FastAPI
+- SQLite
 
 ### AI
 
-* Whisper.cpp
-* Tesseract OCR
-* Phi-3 Mini GGUF
-* llama.cpp
+- Whisper.cpp
+- Tesseract OCR
+- Phi-3 Mini GGUF
+- llama.cpp
 
 ## Architecture
 

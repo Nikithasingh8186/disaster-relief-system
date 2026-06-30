@@ -48,7 +48,7 @@ Export CSV.
 
 ## Success Criteria
 
-* No internet required.
-* AI inference works locally.
-* Database works locally.
-* Dashboard functions normally.
+- No internet required.
+- AI inference works locally.
+- Database works locally.
+- Dashboard functions normally.
