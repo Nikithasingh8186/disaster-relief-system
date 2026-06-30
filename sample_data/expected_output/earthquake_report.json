@@ -1,0 +1,9 @@
+{
+  "location": "Bus Station",
+  "people_affected": 5,
+  "injuries": 5,
+  "needs": [
+    "medical assistance"
+  ],
+  "priority": "Critical"
+}

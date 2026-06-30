@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import FileResponse
 import pandas as pd
 
-from app.database.db import get_db
+from backend.app.database.db import get_db
 
 router = APIRouter()
 
@@ -18,6 +18,8 @@ def export_csv():
 
     path = "database/incidents.csv"
     df.to_csv(path, index=False)
+
+    conn.close()
 
     return FileResponse(
         path,
