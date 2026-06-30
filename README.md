@@ -138,6 +138,27 @@ User authentication system
 Nikitha Singh
 spurthi
 Disaster Relief AI System Project
+# Disaster Relief Information Extractor
+
+## Features
+
+## Technology Stack
+
+## Installation
+
+### Backend
+
+### Frontend
+
+## Usage
+
+## Project Structure
+
+## API Endpoints
+
+## Contributing
+
+## License
 
 ⭐ Project Goal
 
