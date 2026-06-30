@@ -7,7 +7,8 @@ cur = conn.cursor()
 
 print("🌱 Seeding database with sample data...")
 
-cur.execute("""
+cur.execute(
+    """
 INSERT INTO incidents (
     location,
     people_affected,
@@ -21,9 +22,11 @@ INSERT INTO incidents (
     'food, water',
     'Medium'
 )
-""")
+"""
+)
 
-cur.execute("""
+cur.execute(
+    """
 INSERT INTO incidents (
     location,
     people_affected,
@@ -37,7 +40,8 @@ INSERT INTO incidents (
     'shelter, blankets',
     'High'
 )
-""")
+"""
+)
 
 conn.commit()
 conn.close()
