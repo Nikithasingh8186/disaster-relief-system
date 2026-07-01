@@ -1,10 +1,13 @@
-"""Main FastAPI application module"""
+"""
+FastAPI backend for disaster relief system.
+"""
 
-from app.database.db import get_db
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+from backend.app.database.db import get_db
+
+app = FastAPI(title="Disaster Relief API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,7 +19,7 @@ app.add_middleware(
 
 
 def init_db():
-    """Initialize SQLite database and create incidents table if not exists"""
+    """Initialize database table."""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -42,7 +45,7 @@ init_db()
 
 @app.post("/incidents")
 def add_incident(data: dict):
-    """Add a new incident to the database"""
+    """Add incident to database."""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -69,7 +72,7 @@ def add_incident(data: dict):
 
 @app.get("/incidents")
 def get_incidents():
-    """Fetch all incidents from database"""
+    """Get all incidents."""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -83,5 +86,5 @@ def get_incidents():
 
 @app.get("/search")
 def search():
-    """Search endpoint placeholder"""
+    """Search endpoint placeholder."""
     return {"results": []}

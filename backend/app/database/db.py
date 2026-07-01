@@ -1,4 +1,6 @@
-"""Database connection module"""
+"""
+Database connection module for RescueSync backend.
+"""
 
 import os
 import sqlite3
@@ -7,6 +9,7 @@ DATABASE = "database/rescuesync.db"
 
 
 def get_db():
+    """Create and return SQLite database connection."""
     # Ensure database folder exists
     os.makedirs(os.path.dirname(DATABASE), exist_ok=True)
 
