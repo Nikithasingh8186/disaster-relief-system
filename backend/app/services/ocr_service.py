@@ -5,9 +5,9 @@ def extract_text(image):
     """
     Extract text from image (mock implementation).
     """
-    _ = image  # prevent unused argument warning
+    _ = image
 
     try:
         return "sample extracted text"
-    except Exception:
+    except BaseException:
         return ""
