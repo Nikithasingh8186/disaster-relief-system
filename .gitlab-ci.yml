@@ -45,14 +45,17 @@ test:
 pylint:
   stage: quality
   script:
-    pylint backend || true
+      - pylint backend
+  allow_failure: true
 
 pyupgrade:
   stage: quality
   script:
     - pyupgrade $(find backend -name "*.py")
 
+
 vulture:
   stage: quality
   script:
-    vulture backend || true
+    - vulture backend
+  allow_failure: true
