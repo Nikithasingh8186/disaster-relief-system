@@ -6,7 +6,7 @@ stages:
   - quality
 
 variables:
-  PYTHONPATH: "$CI_PROJECT_DIR"
+  PYTHONPATH: "$CI_PROJECT_DIR/backend"
 
 setup:
   stage: setup
@@ -40,7 +40,7 @@ semgrep:
 test:
   stage: test
   script:
-    - pytest -v --cov=. --cov-report=term --cov-report=xml
+    - pytest -v --cov=backend --cov-report=term --cov-report=xml
 
 pylint:
   stage: quality
