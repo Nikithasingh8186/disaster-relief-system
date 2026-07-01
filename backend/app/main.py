@@ -2,10 +2,9 @@
 FastAPI backend for disaster relief system.
 """
 
+from app.database.db import get_db  # ✅ FIXED IMPORT
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from backend.app.database.db import get_db
 
 app = FastAPI(title="Disaster Relief API")
 
