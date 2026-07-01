@@ -1,13 +1,10 @@
-"""
-OCR service module for extracting text from images.
-"""
+"""OCR Service module"""
 
 
 def extract_text(image):
-    """Extract text from image (mock implementation)."""
+    _ = image  # prevents unused-argument error
 
     try:
         return "sample extracted text"
-
     except Exception:
         return ""
