@@ -2,7 +2,10 @@
 
 
 def extract_text(image):
-    _ = image  # prevents unused-argument error
+    """
+    Extract text from image (mock implementation).
+    """
+    _ = image  # prevent unused argument warning
 
     try:
         return "sample extracted text"
