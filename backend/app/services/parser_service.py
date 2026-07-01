@@ -1,15 +1,75 @@
-def parse_incident(data: dict):
+import re
+
+
+def parse_incident(data):
     """
-    Normalize incident data from frontend / DB
-    Ensures consistent structure for GPS + manual + old formats
+    Parses incident text or normalizes incident dictionaries.
     """
 
+    # -----------------------------
+    # If input is plain text (used in tests)
+    # -----------------------------
+    if isinstance(data, str):
+        text = data.strip()
+
+        # Extract number of affected people
+        pattern = r"(\d+)|one|two|three|four|five|" r"six|seven|eight|nine|ten"
+
+        match = re.search(pattern, text.lower())
+
+        word_to_num = {
+            "one": 1,
+            "two": 2,
+            "three": 3,
+            "four": 4,
+            "five": 5,
+            "six": 6,
+            "seven": 7,
+            "eight": 8,
+            "nine": 9,
+            "ten": 10,
+        }
+
+        people = 1
+
+        if match:
+            value = match.group(0)
+            if value.isdigit():
+                people = int(value)
+            else:
+                people = word_to_num.get(value, 1)
+
+        needs = []
+
+        lower = text.lower()
+
+        if "food" in lower:
+            needs.append("food")
+
+        if "water" in lower:
+            needs.append("water")
+
+        if "medicine" in lower:
+            needs.append("medicine")
+
+        if "rescue" in lower:
+            needs.append("rescue")
+
+        return {
+            "location": "Unknown",
+            "people_affected": people,
+            "injuries": 0,
+            "needs": needs,
+            "priority": "High" if people >= 5 else "Low",
+        }
+
+    # -----------------------------
+    # Existing dictionary support
+    # -----------------------------
     location = data.get("location")
 
-    # GPS format (new)
     if isinstance(location, dict) and location.get("type") == "gps":
         value = location.get("value", {})
-
         location = {
             "type": "gps",
             "value": {
@@ -18,14 +78,12 @@ def parse_incident(data: dict):
             },
         }
 
-    # Manual format (new)
     elif isinstance(location, dict) and location.get("type") == "manual":
         location = {
             "type": "manual",
             "value": location.get("value") or "",
         }
 
-    # Old GPS format (flat lat/lng)
     elif isinstance(location, dict):
         if "lat" in location and "lng" in location:
             location = {
@@ -36,21 +94,17 @@ def parse_incident(data: dict):
                 },
             }
 
-    # String format
     elif isinstance(location, str):
         location = {
             "type": "manual",
             "value": location,
         }
 
-    # Invalid / missing
     else:
         location = {
             "type": "unknown",
             "value": "Location not available",
         }
 
-    return {
-        **data,
-        "location": location,
-    }
+    data["location"] = location
+    return data

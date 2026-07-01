@@ -1,11 +1,10 @@
-from app.database.db import get_db
-from app.services.parser_service import parse_incident
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.app.database.db import get_db
+
 app = FastAPI()
 
-# CORS (IMPORTANT)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,7 +14,6 @@ app.add_middleware(
 )
 
 
-# 🔥 CREATE TABLE (AUTO SETUP)
 def init_db():
     conn = get_db()
     cursor = conn.cursor()
@@ -24,12 +22,13 @@ def init_db():
         """
         CREATE TABLE IF NOT EXISTS incidents (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            text TEXT,
-            image TEXT,
             location TEXT,
-            time TEXT
+            people_affected INTEGER,
+            injuries INTEGER,
+            needs TEXT,
+            priority TEXT
         )
-    """
+        """
     )
 
     conn.commit()
@@ -39,24 +38,23 @@ def init_db():
 init_db()
 
 
-# 🔥 POST INCIDENT
 @app.post("/incidents")
 def add_incident(data: dict):
-    cleaned = parse_incident(data)
-
     conn = get_db()
     cursor = conn.cursor()
 
     cursor.execute(
         """
-        INSERT INTO incidents (text, image, location, time)
-        VALUES (?, ?, ?, ?)
-    """,
+        INSERT INTO incidents
+        (location, people_affected, injuries, needs, priority)
+        VALUES (?, ?, ?, ?, ?)
+        """,
         (
-            cleaned.get("text"),
-            str(cleaned.get("image")),
-            str(cleaned.get("location")),
-            cleaned.get("time"),
+            data.get("location", "Unknown"),
+            data.get("people_affected", 0),
+            data.get("injuries", 0),
+            data.get("needs", ""),
+            data.get("priority", "Low"),
         ),
     )
 
@@ -66,7 +64,6 @@ def add_incident(data: dict):
     return {"message": "saved"}
 
 
-# 🔥 GET INCIDENTS
 @app.get("/incidents")
 def get_incidents():
     conn = get_db()
@@ -77,19 +74,9 @@ def get_incidents():
 
     conn.close()
 
-    incidents = []
-    for row in rows:
-        incidents.append(
-            {
-                "text": row["text"],
-                "image": row["image"],
-                "location": (
-                    eval(row["location"])
-                    if row["location"].startswith("{")
-                    else row["location"]
-                ),
-                "time": row["time"],
-            }
-        )
+    return [dict(row) for row in rows]
 
-    return [parse_incident(i) for i in incidents]
+
+@app.get("/search")
+def search():
+    return {"results": []}

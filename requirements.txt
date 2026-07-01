@@ -19,3 +19,10 @@ mypy
 
 bandit
 pip-audit
+pylint
+vulture
+pyupgrade
+semgrep
+pytest
+pytest-cov
+pytest-pythonpath

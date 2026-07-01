@@ -1,19 +1,86 @@
+image: python:3.10
+
 stages:
   - lint
+  - security
   - test
+  - quality
 
 variables:
   PYTHONPATH: "$CI_PROJECT_DIR"
 
+before_script:
+  - python --version
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+
+# -----------------------------
+# LINT
+# -----------------------------
 lint:
   stage: lint
   script:
-    - echo "Running lint step"
-    - pip install -r requirements.txt
-    - flake8 backend || true
+    - flake8 backend
 
+# -----------------------------
+# DEPENDENCY AUDIT
+# -----------------------------
+dependency_audit:
+  stage: security
+  script:
+    - pip-audit
+
+# -----------------------------
+# BANDIT
+# -----------------------------
+security_bandit:
+  stage: security
+  script:
+    - bandit -r backend
+
+# -----------------------------
+# SEMGREP
+# -----------------------------
+semgrep:
+  stage: security
+  image: returntocorp/semgrep:latest
+  script:
+    - semgrep --config=auto
+
+# -----------------------------
+# TEST + COVERAGE
+# -----------------------------
 test:
   stage: test
   script:
-    - pip install -r requirements.txt
-    - pytest -q --maxfail=1
+    - pytest --cov=backend --cov-report=term --cov-report=xml
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+  coverage: '/TOTAL.*\s+(\d+\%)$/'
+
+# -----------------------------
+# PYLINT
+# -----------------------------
+pylint:
+  stage: quality
+  script:
+    - pylint backend || true
+
+# -----------------------------
+# PYUPGRADE
+# -----------------------------
+pyupgrade:
+  stage: quality
+  script:
+    - pyupgrade $(find backend -name "*.py") || true
+
+# -----------------------------
+# VULTURE
+# -----------------------------
+vulture:
+  stage: quality
+  script:
+    - vulture backend || true
