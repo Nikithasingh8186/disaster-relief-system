@@ -9,16 +9,22 @@ stages:
 variables:
   PYTHONPATH: "$CI_PROJECT_DIR"
 
-before_script:
-  - python --version
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
+# -----------------------------
+# BASE INSTALL (used by most jobs)
+# -----------------------------
+.base_install: &base_install
+  before_script:
+    - python --version
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install flake8 pytest pytest-cov bandit pip-audit pylint pyupgrade vulture
 
 # -----------------------------
 # LINT
 # -----------------------------
 lint:
   stage: lint
+  <<: *base_install
   script:
     - flake8 backend
 
@@ -27,6 +33,7 @@ lint:
 # -----------------------------
 dependency_audit:
   stage: security
+  <<: *base_install
   script:
     - pip-audit
 
@@ -35,11 +42,12 @@ dependency_audit:
 # -----------------------------
 security_bandit:
   stage: security
+  <<: *base_install
   script:
     - bandit -r backend
 
 # -----------------------------
-# SEMGREP
+# SEMGREP (separate image)
 # -----------------------------
 semgrep:
   stage: security
@@ -52,6 +60,7 @@ semgrep:
 # -----------------------------
 test:
   stage: test
+  <<: *base_install
   script:
     - pytest --cov=backend --cov-report=term --cov-report=xml
   artifacts:
@@ -66,6 +75,7 @@ test:
 # -----------------------------
 pylint:
   stage: quality
+  <<: *base_install
   script:
     - pylint backend || true
 
@@ -74,13 +84,15 @@ pylint:
 # -----------------------------
 pyupgrade:
   stage: quality
+  <<: *base_install
   script:
     - pyupgrade $(find backend -name "*.py") || true
 
 # -----------------------------
-# VULTURE
+# VULTURE (FIXED)
 # -----------------------------
 vulture:
   stage: quality
+  <<: *base_install
   script:
     - vulture backend || true
