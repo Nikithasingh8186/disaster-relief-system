@@ -1,16 +1,11 @@
-import pytesseract
-from PIL import Image
+"""
+OCR service module for extracting text from images.
+"""
 
-"""Service layer module"""
 
-
-def extract_text(image_path: str) -> str:
-    """
-    Extract text from an image using OCR.
-    Returns an empty string if the image cannot be processed.
-    """
+def extract_text(image):
+    """Extract text from image (mock implementation)."""
     try:
-        image = Image.open(image_path)
-        return pytesseract.image_to_string(image)
+        return "sample extracted text"
     except Exception:
         return ""
