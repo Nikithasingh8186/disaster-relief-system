@@ -14,6 +14,7 @@ app.add_middleware(
 
 
 def init_db():
+    """Initialize SQLite database and create incidents table if not exists"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -39,6 +40,7 @@ init_db()
 
 @app.post("/incidents")
 def add_incident(data: dict):
+    """Add a new incident to the database"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -65,6 +67,7 @@ def add_incident(data: dict):
 
 @app.get("/incidents")
 def get_incidents():
+    """Fetch all incidents from database"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -78,4 +81,5 @@ def get_incidents():
 
 @app.get("/search")
 def search():
+    """Search endpoint placeholder"""
     return {"results": []}
