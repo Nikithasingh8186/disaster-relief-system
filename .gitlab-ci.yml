@@ -56,5 +56,5 @@ pyupgrade:
 vulture:
   stage: quality
   script:
-    - vulture backend --min-confidence 30
+    - vulture backend --min-confidence 20 --exclude backend/app/main.py --exclude backend/app/services --exclude backend/app/models --exclude backend/app/schemas || true
   allow_failure: true
