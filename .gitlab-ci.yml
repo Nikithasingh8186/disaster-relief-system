@@ -56,5 +56,5 @@ pyupgrade:
 vulture:
   stage: quality
   script:
-    - vulture backend
+    - vulture backend --min-confidence 30
   allow_failure: true

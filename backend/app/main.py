@@ -1,3 +1,5 @@
+"""Main FastAPI application module"""
+
 from app.database.db import get_db
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

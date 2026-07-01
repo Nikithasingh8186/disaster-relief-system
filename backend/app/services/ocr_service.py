@@ -1,6 +1,8 @@
 import pytesseract
 from PIL import Image
 
+"""Service layer module"""
+
 
 def extract_text(image_path: str) -> str:
     """

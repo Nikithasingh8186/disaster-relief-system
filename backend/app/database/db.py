@@ -1,3 +1,5 @@
+"""Database connection module"""
+
 import os
 import sqlite3
 

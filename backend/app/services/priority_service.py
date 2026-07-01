@@ -1,3 +1,6 @@
+"""Service layer module"""
+
+
 def calculate_priority(people_affected: int, injuries: int) -> str:
     """Calculate the priority level of an incident."""
 
