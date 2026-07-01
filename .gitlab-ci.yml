@@ -1,6 +1,7 @@
 image: python:3.10
 
 stages:
+  - setup
   - lint
   - security
   - test
@@ -8,12 +9,21 @@ stages:
 
 variables:
   PYTHONPATH: "$CI_PROJECT_DIR"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 # -----------------------------
-# BASE INSTALL (used by most jobs)
+# CACHE (speed boost)
 # -----------------------------
-.base_install: &base_install
-  before_script:
+cache:
+  paths:
+    - .cache/pip
+
+# -----------------------------
+# INSTALL DEPENDENCIES ONCE
+# -----------------------------
+setup:
+  stage: setup
+  script:
     - python --version
     - pip install --upgrade pip
     - pip install -r requirements.txt
@@ -24,30 +34,27 @@ variables:
 # -----------------------------
 lint:
   stage: lint
-  <<: *base_install
   script:
     - flake8 backend
 
 # -----------------------------
-# DEPENDENCY AUDIT
+# SECURITY: DEPENDENCY AUDIT
 # -----------------------------
 dependency_audit:
   stage: security
-  <<: *base_install
   script:
     - pip-audit
 
 # -----------------------------
-# BANDIT
+# SECURITY: BANDIT
 # -----------------------------
 security_bandit:
   stage: security
-  <<: *base_install
   script:
     - bandit -r backend
 
 # -----------------------------
-# SEMGREP (separate image)
+# SEMGREP (STATIC ANALYSIS)
 # -----------------------------
 semgrep:
   stage: security
@@ -56,11 +63,10 @@ semgrep:
     - semgrep --config=auto
 
 # -----------------------------
-# TEST + COVERAGE
+# TESTS + COVERAGE
 # -----------------------------
 test:
   stage: test
-  <<: *base_install
   script:
     - pytest --cov=backend --cov-report=term --cov-report=xml
   artifacts:
@@ -71,28 +77,19 @@ test:
   coverage: '/TOTAL.*\s+(\d+\%)$/'
 
 # -----------------------------
-# PYLINT
+# QUALITY CHECKS
 # -----------------------------
 pylint:
   stage: quality
-  <<: *base_install
   script:
     - pylint backend || true
 
-# -----------------------------
-# PYUPGRADE
-# -----------------------------
 pyupgrade:
   stage: quality
-  <<: *base_install
   script:
     - pyupgrade $(find backend -name "*.py") || true
 
-# -----------------------------
-# VULTURE (FIXED)
-# -----------------------------
 vulture:
   stage: quality
-  <<: *base_install
   script:
     - vulture backend || true
