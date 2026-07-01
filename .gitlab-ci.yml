@@ -40,8 +40,7 @@ semgrep:
 test:
   stage: test
   script:
-    - cd backend
-    - pytest --cov=. --cov-report=term --cov-report=xml
+    - pytest -v --cov=. --cov-report=term --cov-report=xml
 
 pylint:
   stage: quality
