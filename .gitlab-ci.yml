@@ -5,51 +5,55 @@ stages:
   - test
   - quality
 
+variables:
+  PYTHONPATH: "$CI_PROJECT_DIR"
+
 setup:
   stage: setup
   script:
     - python --version
     - pip install --upgrade pip
-    - pip install -r requirements.txt || true
+    - pip install -r requirements.txt
     - pip install flake8 bandit pip-audit pytest pytest-cov pylint pyupgrade vulture semgrep
 
 lint:
   stage: lint
   script:
-    - flake8 backend || true
+    - flake8 backend
 
 dependency_audit:
   stage: security
   script:
-    - pip-audit || true
+    - pip-audit
 
 security_bandit:
   stage: security
   script:
-    - bandit -r backend || true
+    - bandit -r backend
 
 semgrep:
   stage: security
   image: returntocorp/semgrep:latest
   script:
-    - semgrep --config=auto || true
+    - semgrep --config=auto
 
 test:
   stage: test
   script:
-    - pytest --cov=backend --cov-report=term --cov-report=xml || true
+    - cd backend
+    - pytest --cov=. --cov-report=term --cov-report=xml
 
 pylint:
   stage: quality
   script:
-    - pylint backend || true
+    - pylint backend
 
 pyupgrade:
   stage: quality
   script:
-    - pyupgrade $(find backend -name "*.py") || true
+    - pyupgrade $(find backend -name "*.py")
 
 vulture:
   stage: quality
   script:
-    - vulture backend || true
+    - vulture backend
