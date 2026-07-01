@@ -1,7 +1,6 @@
+from app.database.db import get_db
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from backend.app.database.db import get_db
 
 app = FastAPI()
 
