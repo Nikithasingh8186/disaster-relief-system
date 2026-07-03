@@ -1,4 +1,4 @@
-const API = 'http://127.0.0.1:8000';
+const API = "https://disaster-relief-system.onrender.com";
 
 export const getIncidents = async () => {
   const res = await fetch(`${API}/incidents`);
