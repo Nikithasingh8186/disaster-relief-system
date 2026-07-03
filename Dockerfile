@@ -1,16 +1,19 @@
 FROM python:3.10
 
-# set working directory
+# Set working directory
 WORKDIR /app
 
-# copy backend requirements first
+# Copy requirements first
 COPY backend/requirements.txt .
 
-# install dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# copy backend code
+# Copy backend source code
 COPY backend/ .
 
-# run FastAPI app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose the port
+EXPOSE 10000
+
+# Start FastAPI
+CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000}
