@@ -1,5 +1,7 @@
 """
+
 FastAPI backend for disaster relief system.
+
 """
 
 from app.database.db import get_db  # ✅ FIXED IMPORT
@@ -7,6 +9,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Disaster Relief API")
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,23 +22,35 @@ app.add_middleware(
 
 def init_db():
     """Initialize database table."""
+
     conn = get_db()
+
     cursor = conn.cursor()
 
     cursor.execute(
         """
+
         CREATE TABLE IF NOT EXISTS incidents (
+
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+
             location TEXT,
+
             people_affected INTEGER,
+
             injuries INTEGER,
+
             needs TEXT,
+
             priority TEXT
+
         )
+
         """
     )
 
     conn.commit()
+
     conn.close()
 
 
@@ -45,14 +60,20 @@ init_db()
 @app.post("/incidents")
 def add_incident(data: dict):
     """Add incident to database."""
+
     conn = get_db()
+
     cursor = conn.cursor()
 
     cursor.execute(
         """
+
         INSERT INTO incidents
+
         (location, people_affected, injuries, needs, priority)
+
         VALUES (?, ?, ?, ?, ?)
+
         """,
         (
             data.get("location", "Unknown"),
@@ -64,6 +85,7 @@ def add_incident(data: dict):
     )
 
     conn.commit()
+
     conn.close()
 
     return {"message": "saved"}
@@ -72,10 +94,13 @@ def add_incident(data: dict):
 @app.get("/incidents")
 def get_incidents():
     """Get all incidents."""
+
     conn = get_db()
+
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM incidents")
+
     rows = cursor.fetchall()
 
     conn.close()
@@ -86,4 +111,5 @@ def get_incidents():
 @app.get("/search")
 def search():
     """Search endpoint placeholder."""
+
     return {"results": []}
