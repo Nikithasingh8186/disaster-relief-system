@@ -32,3 +32,4 @@ database/*.db
 # Models
 models/**/*.gguf
 models/**/*.bin
+gitlab-runner.exe
